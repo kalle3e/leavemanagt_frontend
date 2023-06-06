@@ -1,0 +1,258 @@
+<form [formGroup]="formGroup" (ngSubmit)="save()">
+<div *ngIf="!(isShowEdit || isShowAddForm) ">
+<mat-card>
+  <div style="margin-top: 20px; margin-left: 10px">
+    <h2>LATEST LEAVE APPLICATIONS</h2>
+  </div>
+  <div fxLayout="row" fx-grow="1" style="align-items: baseline;">
+    <div style="margin-left: 20px">
+      <mat-form-field appearance="fill">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+      </mat-form-field>
+    </div>
+
+
+    <div style="margin-left: 90px">
+      <button mat-raised-button color="primary" (click)="showAddForm()" [disabled]="isShowEdit">Add</button>
+    </div>
+<!--      <div></div>-->
+    <div style="margin-left: 60px"><h3 style="color: rgba(54,140,57);">Record added</h3></div>
+<!--      <div>Record added</div>-->
+<!--      <div>Record added</div>-->
+
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+
+    <ng-container matColumnDef="txId">
+      <th mat-header-cell *matHeaderCellDef> Tx Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.tx_id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="employeeName">
+      <th mat-header-cell *matHeaderCellDef> Employee Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee_name}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef> Start Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef> End Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.end_date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="days">
+      <th mat-header-cell *matHeaderCellDef> Days </th>
+      <td mat-cell *matCellDef="let element"> {{element.days}} </td>
+    </ng-container>
+    <ng-container matColumnDef="leaveType">
+      <th mat-header-cell *matHeaderCellDef> Leave Type </th>
+      <td mat-cell *matCellDef="let element"> {{element.leave_type}} </td>
+    </ng-container>
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell *matHeaderCellDef> Reason </th>
+      <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="inEdit">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end" style="margin-top: 20px">
+          <button mat-raised-button color="primary" type="button" (click)="showEditForm(element)" [disabled]="isShowAddForm || isShowEdit">edit</button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="leaveDisplayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: leaveDisplayColumns;"></tr>
+  </table>
+</mat-card>
+</div>
+
+<!--<div *ngIf="isShowAddForm">-->
+<!--  <h3>Add Form</h3>-->
+<!--  <form [formGroup]="formGroup" (ngSubmit)="add()" >-->
+<!--    <label for="name">Name</label>-->
+<!--    <input id="name" type="text" formControlName="name" >-->
+
+<!--    <label for="startDate">Start Date</label>-->
+<!--    <input id="startDate" type="date" formControlName="start_date" >-->
+
+<!--    <label for="endDate">End Date</label>-->
+<!--    <input id="endDate" type="date" formControlName="end_date" >-->
+
+<!--    <button type="submit" [disabled]="!formGroup.valid"></button>-->
+<!--  </form>-->
+<!--</div>-->
+
+<!--<div *ngIf="isShowMini">-->
+<!--  <h3>Edit Form</h3>-->
+<!--  <form [formGroup]="formGroup" (ngSubmit)="editMini()" >-->
+<!--    <label for="name">Name</label>-->
+<!--    <input id="name" type="text" formControlName="name" >-->
+
+<!--    <label for="startDate">Start Date</label>-->
+<!--    <input id="startDate" type="text" formControlName="start_date" >-->
+
+<!--    <label for="endDate">End Date</label>-->
+<!--    <input id="endDate" type="text" formControlName="end_date" >-->
+
+<!--    <button type="submit" [disabled]="!formGroup.valid"></button>-->
+
+<!--  </form>-->
+<!--</div>-->
+
+<!--LEAVE DETAILS-->   <!--LEAVE DETAILS-->
+<div *ngIf="isShowEdit || isShowAddForm">
+  <mat-card>
+    <div style="margin-left: 10px; margin-top: 20px; ">
+      <div >
+      <div *ngIf="isShowEdit">
+        <mat-card-title>Leave Details</mat-card-title>
+      </div>
+      <div *ngIf="isShowAddForm">
+        <mat-card-title>Create Leave</mat-card-title>
+      </div>
+    </div>
+
+
+      <form [formGroup]="formGroup" (ngSubmit)="save()">
+        <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 30px;">
+
+
+          <div style="width: 50px; margin-left: 80px">
+            <button type="submit" mat-raised-button color="primary">Save</button>
+          </div>
+        </div>
+
+<!--        <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 50px;">-->
+
+
+<!--          <div style="width: 50px; margin-left: 80px">-->
+<!--            <button mat-raised-button color="primary">Modify</button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+
+        <div *ngIf="!isShowAddForm">
+          <mat-form-field fxFill>
+            <mat-label>Tx Id</mat-label>
+            <input matInput  formControlName="tx_id">
+          </mat-form-field>
+        </div>
+        <mat-form-field fxFill>
+          <mat-label>Employee Name</mat-label>
+          <input matInput  formControlName="employee_name">
+        </mat-form-field>
+        <mat-form-field fxFill>
+          <mat-label>Start Date</mat-label>
+          <input matInput type="date" [matDatepicker]="start_date" formControlName="start_date">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="start_date"></mat-datepicker-toggle>
+          <mat-datepicker #start_date></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field fxFill>
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="end_date" formControlName="end_date">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="end_date"></mat-datepicker-toggle>
+          <mat-datepicker #end_date></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+          <mat-label>Days</mat-label>
+          <input matInput  formControlName="days">
+        </mat-form-field>
+<!--        <select matNativeControl required formControlName="leave_type">-->
+<!--          <option value="volvo">Volvo</option>-->
+<!--          <option value="saab">Saab</option>-->
+<!--          <option value="mercedes">Mercedes</option>-->
+<!--          <option value="audi">Audi</option>-->
+<!--        </select>-->
+        <mat-form-field fxFill>
+          <mat-label>LeaveType</mat-label>
+          <mat-select matNativeControl required formControlName="leave_type">
+            <mat-option *ngFor="let leavetyp of leavetyps" [value]="leavetyp.value">
+              {{leavetyp.viewValue}}
+            </mat-option>
+          </mat-select>
+<!--          <input matInput  formControlName="leave_type">-->
+        </mat-form-field>
+        <mat-form-field fxFill>
+          <mat-label>Reason</mat-label>
+
+          <input matInput  formControlName="reason">
+        </mat-form-field>
+        <mat-form-field fxFill>
+          <mat-label>Status</mat-label>
+          <input matInput  formControlName="status">
+        </mat-form-field>
+
+      </form>
+    </div>
+  </mat-card>
+</div>
+<!--LEAVE DET-->
+
+
+
+<!--<p>Form Value: {{formGroup.value |  json}}</p>-->
+<!--TEST TABLE-->
+
+<!--<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
+
+<!--  &lt;!&ndash;- Note that these columns can be defined in any order.-->
+<!--        The actual rendered columns are set as a property on the row definition" &ndash;&gt;-->
+
+<!--  &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="position">-->
+<!--    <th mat-header-cell *matHeaderCellDef> No. </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.position}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="name">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="weight">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Weight </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="symbol">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Symbol </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+<!--  </ng-container>-->
+<!--  <ng-container matColumnDef="inEdit">-->
+<!--    <mat-header-cell *matHeaderCellDef></mat-header-cell>-->
+<!--    <mat-cell *matCellDef="let element">-->
+<!--      <div fxLayout="row" fxLayoutGap="10px" >-->
+<!--        <button mat-raised-button color="primary" type="button" (click)="showEditForm(element)">edit</button>-->
+<!--        </div>-->
+<!--    </mat-cell>-->
+<!--  </ng-container>-->
+
+<!--  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--</table>-->
+
+

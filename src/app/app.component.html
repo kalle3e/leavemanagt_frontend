@@ -1,0 +1,178 @@
+<app-leave></app-leave>
+
+<!--<button type="button" (click)="check()">Check console</button>-->
+<!--<div style="margin-left: 10px; margin-top: 20px">-->
+<!--  <mat-card>-->
+
+<!--    <mat-card-title>LATEST LEAVE APPLICATIONS</mat-card-title>-->
+<!--    <div fxLayout="row" fx-grow="1" style="align-items: baseline">-->
+<!--      <mat-form-field >-->
+<!--        <mat-label>Search </mat-label>-->
+<!--        <input matInput name="searchText" >-->
+<!--      </mat-form-field>-->
+<!--      <div style="width: 50px; margin-left: 50px">-->
+<!--        <button mat-raised-button color="primary">Search</button>-->
+<!--      </div>-->
+<!--      <div style="width: 50px; margin-left: 80px">-->
+<!--        <button mat-raised-button color="primary">Add</button>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </mat-card>-->
+<!--</div>-->
+
+
+<!--<table mat-table [dataSource]="leave" class="mat-elevation-z8">-->
+
+<!--  &lt;!&ndash;- Note that these columns can be defined in any order.-->
+<!--        The actual rendered columns are set as a property on the row definition" &ndash;&gt;-->
+
+<!--  &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="txId">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Tx Id </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.tx_id}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="employeeName">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Employee Name </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.employee_name}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="leaveType">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Leave Type </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.leave_type}} </td>-->
+<!--  </ng-container>-->
+
+<!--  &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--  <ng-container matColumnDef="startDate">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Start Date </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>-->
+<!--  </ng-container>-->
+
+<!--  <ng-container matColumnDef="endDate">-->
+<!--    <th mat-header-cell *matHeaderCellDef> End Date </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.end_date}} </td>-->
+<!--  </ng-container>-->
+
+<!--  <ng-container matColumnDef="status">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Status </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.status}} </td>-->
+<!--  </ng-container>-->
+<!--  <tr mat-header-row *matHeaderRowDef="leaveDisplayColumns"></tr>-->
+<!--  <tr mat-row-->
+<!--      (click)="clickedRows.add(row)"-->
+<!--      [class.demo-row-is-clicked]="clickedRows.has(row)"-->
+<!--      *matRowDef="let row; columns: leaveDisplayColumns;">-->
+
+<!--  </tr>-->
+<!--</table>-->
+
+<!--Dynamic Table - DB data 'get' works-->
+<!--<article class="table-header">-->
+<!--  <button class="button-add-row" mat-raised-button color="primary" (click)="addRow()">-->
+<!--    Request Leave-->
+<!--  </button>-->
+<!--</article>-->
+<!--<table mat-table [dataSource]="leave">-->
+<!--  <ng-container [matColumnDef]="col.column" *ngFor="let col of columnsSchema">-->
+
+<!--    <th mat-header-cell *matHeaderCellDef>-->
+<!--      {{ col.label }}-->
+<!--    </th>-->
+<!--    <td mat-cell *matCellDef="let element">-->
+<!--      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">-->
+<!--        <div class="btn-edit" *ngSwitchCase="'isEdit'">-->
+<!--          <button mat-raised-button (click)="element.isEdit = !element.isEdit">Edit</button>-->
+<!--        </div>-->
+<!--        <span *ngSwitchDefault>-->
+<!--          {{ element[col.key] }}-->
+<!--        </span>-->
+<!--      </div>-->
+<!--      <div *ngIf="element.isEdit">-->
+<!--        <div class="button-edit" *ngIf="col.key === 'isEdit'; else dataField">-->
+<!--          <button mat-raised-button (click)="save()">Save</button>-->
+<!--        </div>-->
+<!--        <ng-template #dataField>-->
+<!--          <mat-form-field>-->
+<!--            <input-->
+<!--              [type]="col.type"-->
+<!--              matInput-->
+<!--              formControlName="element[col.key]"-->
+<!--            />-->
+<!--          </mat-form-field>-->
+
+<!--        </ng-template>-->
+
+<!--      </div>-->
+<!--    </td>-->
+<!--  </ng-container>-->
+<!--  <tr mat-header-row *matHeaderRowDef="leaveDisplayColumns"></tr>-->
+<!--  <tr mat-row *matRowDef="let row; columns: leaveDisplayColumns;"></tr>-->
+<!--</table>-->
+
+
+<!--Dynamic Table-->
+<!--<mat-card>-->
+<!--  <div style="margin-left: 10px; margin-top: 20px">-->
+<!--    <mat-card-title>Leave Details</mat-card-title>-->
+
+
+<!--    <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()">-->
+<!--      <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 30px;">-->
+
+
+<!--        <div style="width: 50px; margin-left: 80px">-->
+<!--          <button mat-raised-button color="primary">Add</button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 50px;">-->
+
+
+<!--        <div style="width: 50px; margin-left: 80px">-->
+<!--          <button mat-raised-button color="primary">Modify</button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+
+
+
+<!--      <mat-form-field fxFill>-->
+<!--        <mat-label>Tx Id</mat-label>-->
+<!--        <input matInput  formControlName="txId">-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field fxFill>-->
+<!--        <mat-label>Start Date</mat-label>-->
+<!--        <input matInput  formControlName="startDate">-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field fxFill>-->
+<!--        <mat-label>End Date</mat-label>-->
+<!--        <input matInput  formControlName="endDate">-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field fxFill>-->
+<!--        <mat-label>Employee Name</mat-label>-->
+<!--        <input matInput  formControlName="employeeName">-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field fxFill>-->
+<!--        <mat-label>Days</mat-label>-->
+<!--        <input matInput  formControlName="endDate">-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field fxFill>-->
+<!--        <mat-label>Reason</mat-label>-->
+<!--        <input matInput  formControlName="reason">-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field fxFill>-->
+<!--        <mat-label>Status</mat-label>-->
+<!--        <input matInput  formControlName="status">-->
+<!--      </mat-form-field>-->
+
+<!--    </form>-->
+<!--  </div>-->
+<!--</mat-card>-->
+
+
+
+
