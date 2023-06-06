@@ -1,4 +1,4 @@
-/.angular
+.angular/cache
 # Compiled output
 /dist
 /tmp
@@ -9,15 +9,6 @@
 # Dependencies
 /node_modules
 
-# Cordova
-/www
-/plugins
-/platforms
-
-# Electron
-/dist-electron
-/dist-packages
-/electron.main.js
 
 # IDEs and editors
 .idea/*
@@ -31,16 +22,6 @@
 xcuserdata/
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# Maven
-/target
-/log
 
 # Misc
 /.sass-cache
