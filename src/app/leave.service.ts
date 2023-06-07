@@ -4,6 +4,7 @@ import { Leave } from "./Leave";
 import { Jsondata } from "./jsondata";
 import { map } from "rxjs";
 import { Testdata } from "./Testdata";
+import { Leavedb } from "./Leavedb";
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,15 @@ export class LeaveService {
     return this.http.post(`${this.baseUrl}/add`, { data: testdata }).pipe (
       map((res) => {
         return res;
+      })
+    );
+  }
+
+  addLeavedb(leavedata: Leavedb) {
+    console.log('In Service call - addTeLeave')
+    return this.http.post(`${this.baseUrl}/add`, { data: leavedata }).pipe (
+      map((res: any) => {
+        return res['data'];
       })
     );
   }

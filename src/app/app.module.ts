@@ -17,7 +17,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTableModule } from "@angular/material/table";
 import { LeaveComponent } from "./leave/leave.component";
-
+import { MatLegacyNativeDateModule } from "@angular/material/legacy-core";
 
 
 
@@ -47,7 +47,9 @@ import { LeaveComponent } from "./leave/leave.component";
     HttpClientModule,
     MatTableModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatLegacyNativeDateModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

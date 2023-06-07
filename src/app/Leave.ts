@@ -3,7 +3,7 @@ export interface Leave {
   employee_name: string,
   start_date: string,
   end_date: string,
-  days: number,
+  days: number
   leave_type: string,
   reason: string,
   status: string

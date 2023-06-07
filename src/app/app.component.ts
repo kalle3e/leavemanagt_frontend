@@ -10,6 +10,8 @@ import { LeaveService } from "./leave.service";
 import {Jsondata} from "./jsondata";
 import { MatTableModule  } from "@angular/material/table";
 import { Testdata } from "./Testdata";
+import { Leavedb } from "./Leavedb";
+
 
 
 @Component({
@@ -30,7 +32,7 @@ export class AppComponent implements OnInit {
     console.log("In ngOnInit :");
 
     this.getLeave();
-    this.addLeave();
+    // this.addLeave();
   }
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
@@ -46,6 +48,9 @@ export class AppComponent implements OnInit {
   jsondata: Jsondata | undefined;
 
   testdata: Testdata = {name: 'Kathie', age: 20};
+  leavedata: Leavedb = {employee_name: 'zzkathie', start_date: '2023-12-02', end_date: '2023-02-03', leave_type: 'Vacation',
+      status: 'Approved'
+      }
 
   success: string = '';
   errorm: string = '';
@@ -81,15 +86,23 @@ export class AppComponent implements OnInit {
     );
   }
 
+  // addLeave() {
+  //   this.leaveService.addTeLeave(this.testdata).subscribe(
+  //     (res) => {
+  //       this.success = 'Created sucessfully';
+  //     },
+  //     (err) => (this.errorm = err.message)
+  //   );
+  // }
   addLeave() {
-    this.leaveService.addTeLeave(this.testdata).subscribe(
-      () => {
+    this.leaveService.addLeavedb(this.leavedata).subscribe(
+      (res: Leave) => {
+
         this.success = 'Created sucessfully';
       },
       (err) => (this.errorm = err.message)
     );
   }
-
   onSubmit() {}
 
 }

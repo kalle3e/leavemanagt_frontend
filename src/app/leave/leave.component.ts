@@ -1,10 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import { FormBuilder, ValidatorFn, AbstractControl, ValidationErrors } from "@angular/forms";
+import {FormBuilder, ValidatorFn, AbstractControl, ValidationErrors, FormControl} from "@angular/forms";
 import { MatFormField } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
 import { MatTableDataSource } from "@angular/material/table";
 import { PersonFilter} from "../PersonFilter";
 import { Leave } from "../Leave";
+import { Leavedb } from "../Leavedb";
+import { LeaveService } from "../leave.service";
+import  { Moment } from 'moment';
+import * as moment from 'moment';
 
 interface Leavetyps {
   value: string;
@@ -31,12 +35,14 @@ export class LeaveComponent implements OnInit{
 
   leaveType: string[] = ['Personal', 'Sick', 'Vacation', 'Bereavement'];
 
+  date = new FormControl(new Date('2023-12-12'));
 
   formGroup = this.fb.group({
     tx_id: [''],
     employee_name: [''],
-    start_date: [''], // error : <string | null> tobe defined somewher - see notes
-    end_date: [''],
+    // start_date: [''], // error : <string | null> tobe defined somewher - see notes
+      start_date: new FormControl(new Date('2023-12-12')),
+    end_date: new FormControl(new Date('2023-12-12')),
     days: [''],
     leave_type: [''],
     reason: [''],
@@ -51,6 +57,7 @@ export class LeaveComponent implements OnInit{
   //   return start?.value !== null && end?.value !== null && start?.value < end?.value
   //     ? null :{ dateValid:true };
   // }
+  // Need data
   LeaveData:
     Leave[] =[{"tx_id":2222,"employee_name":"Shirley Mille","start_date":"28/09/2022","end_date":"29/09/2022","days":5,"leave_type":"Sick","reason":"a","status":"Approved"},
     {"tx_id":3333,"employee_name":"Hudson O'Brien","start_date":"28-09-2022","end_date":"01-10-2022","days":6,"leave_type":"Vacation","reason":"a","status":"Pending"},
@@ -61,15 +68,24 @@ export class LeaveComponent implements OnInit{
     {"tx_id":8888,"employee_name":"Amelia Bennett","start_date":"03-01-2022","end_date":"10-01-2022","days":5,"leave_type":"Personal","reason":"a","status":"Approved"},
     {"tx_id":9999,"employee_name":"Ellie Taylor","start_date":"03-01-2022","end_date":"10-01-2022","days":10,"leave_type":"Sick","reason":"a","status":"Approved"},];
   // dataSource = PERSON;
-  dataSource = new MatTableDataSource(this.LeaveData)
-  dataSourceFilters = new MatTableDataSource(this.LeaveData);
+  dataSource = new MatTableDataSource(this.LeaveData)  // Need data
+  dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
 
   leaveDisplayColumns: string[] = ['txId', 'employeeName', 'startDate', 'endDate', 'days', 'leaveType', 'reason', 'status', 'inEdit'];
+  leavedata: Leavedb = {employee_name: 'zzkathie', start_date: '2023-12-02', end_date: '2023-02-03', leave_type: 'Vacation',
+    status: 'Approved'
+  }
+
+  success: string = '';
+  errorm: string = '';
+
 
   // dataSource = ELEMENT_DATA;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'inEdit'];
-  constructor(private fb: FormBuilder) {
-  }
+  constructor(private fb: FormBuilder,
+              private leaveService: LeaveService
+  )
+  {}
 
   ngOnInit(): void {
     console.log("In console.log ----")
@@ -96,8 +112,8 @@ export class LeaveComponent implements OnInit{
     this.formGroup.reset({
       tx_id: '',
       employee_name: '',
-      start_date: '',
-      end_date: '' ,
+      start_date: new Date(),
+      end_date: new Date(),
       days: '',
       leave_type: '',
       reason: '',
@@ -115,6 +131,18 @@ export class LeaveComponent implements OnInit{
     this.isShowEdit = false;
     this.isShowAddForm = false;
     console.log("In save ---")
+
+    console.log(this.formGroup.get('start_date')?.value);
+
+    // If tx_id avail add/create service else update service
+    //
+    this.leaveService.addLeavedb(this.leavedata).subscribe(
+      (res: Leave) => {
+
+        this.success = 'Created sucessfully';
+      },
+      (err) => (this.errorm = err.message)
+    );
     // const data = this.formGroup.value;
     // console.log(`Data to save: ${data.employee_name}`)
 
@@ -135,14 +163,21 @@ export class LeaveComponent implements OnInit{
 
   showEditForm(element: Leave) {
 
+    console.log(`Date edit: ${element.start_date}`) // convert this for Edit field datepicker
+
+    // Date(moment("21/10/2023", "DD/MM/YYYY").format("YYYY-MM-DD"))
+    // const formatStart =  moment("21/10/14", "DD/MM/YY").format("MM/DD/YY");
+    // const newdate = new Date(formatStart)
     const ti = `${element.tx_id}`;
-    // const start: Date = new Date(element.start_date);
+
 
     this.formGroup.get('tx_id')?.setValue(ti);
     this.formGroup.get('employee_name')?.setValue(element.employee_name);
+    this.formGroup.get('start_date')?.setValue(new Date('2023-12-12'));
+    // this.formGroup.get('end_date')?.setValue(element.end_date);
+    this.formGroup.get('end_date')?.setValue(new Date('2023-12-12'));
     // this.formGroup.get('start_date')?.setValue(element.start_date);
-    // this.formGroup.get('start_date')?.setValue();
-    this.formGroup.get('end_date')?.setValue(element.end_date);
+    // this.formGroup.get('end_date')?.setValue(element.end_date);
     this.formGroup.get('days')?.setValue(`${element.days}`);
     this.formGroup.get('leave_type')?.setValue(element.leave_type);
     this.formGroup.get('reason')?.setValue(element.reason);
@@ -150,6 +185,16 @@ export class LeaveComponent implements OnInit{
     this.isShowEdit = true;
 
   }
+
+  // private formatDate(date)  {
+  //   const d = new Date(date);
+  //   let month = '' + (d.getMonth() + 1);
+  //   let day = '' + d.getDate();
+  //   const year = d.getFullYear();
+  //   if (month.length < 2) month = '0' + month;
+  //   if (day.length < 2) day = '0' + day;
+  //   return [year, month, day].join('-');
+  // }
   // edit(element: PeriodicElement) {
   // //   Call Edit Service
   // // const a = element.name;
