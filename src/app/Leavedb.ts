@@ -1,7 +1,10 @@
 export interface Leavedb {
-  employee_name: string,
-  start_date: string,
-  end_date: string,
-  leave_type: string,
-  status: string
+  txId?: string,
+  employeeName: string,
+  startDate?: string,
+  endDate?: string,
+  days?: string,
+  leaveType?: string,
+  reason?: string,
+  status?: string
 }

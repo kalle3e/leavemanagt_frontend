@@ -38,15 +38,18 @@ export class LeaveComponent implements OnInit{
   date = new FormControl(new Date('2023-12-12'));
 
   formGroup = this.fb.group({
-    tx_id: [''],
-    employee_name: [''],
-    // start_date: [''], // error : <string | null> tobe defined somewher - see notes
-      start_date: new FormControl(new Date('2023-12-12')),
-    end_date: new FormControl(new Date('2023-12-12')),
-    days: [''],
-    leave_type: [''],
-    reason: [''],
-    status:['']
+
+    // txId:  FormControl,
+    txId:  new FormControl<string|null>(''),
+    // employeeName: new FormControl<string|null>(''),
+    employeeName: [''],
+    // start_date: [], // error : <string | null> tobe defined somewher - see notes
+      startDate: new FormControl(new Date('2023-12-12')),
+    endDate: new FormControl(new Date('2023-12-12')),
+    days: new FormControl<string|null>(''),
+    leaveType: new FormControl<string|null>(''),
+    reason: new FormControl<string|null>(''),
+    status:new FormControl<string|null>('')
   });
 
   //  // https://angular.io/api/forms/FormGroup#create-a-form-group-with-a-group-level-validator
@@ -57,28 +60,39 @@ export class LeaveComponent implements OnInit{
   //   return start?.value !== null && end?.value !== null && start?.value < end?.value
   //     ? null :{ dateValid:true };
   // }
+  //   Using old names (Leave[]; spec tx_id as number)
+  // LeaveData:
+  //   Leave[] =[{"tx_id":'2222',"employeeName":"Shirley Mille","startDate":"28/09/2022","endDate":"29/09/2022","days":'5',"leave_type":"Sick","reason":"a","status":"Approved"},
+  //   {"txId":'3333',"employeeName":"Hudson O'Brien","startDate":"28-09-2022","end_date":"01-10-2022","days":'6',"leave_type":"Vacation","reason":"a","status":"Pending"},
+  //   {"txId":'4444',"employeeName":"Lily Wright","startDate":"28-09-2022","end_date":"24-10-2022","days":'2',"leave_type":"Personal","reason":"a","status":"Approved"},
+  //   {"txId":'5555',"employeeName":"Claire Ryan","startDate":"25-09-2022","end_date":"26-09-2022","days":'4',"leave_type":"Bereavement","reason":"a","status":"Approved"},
+  //   {"txId":'6666',"employeeName":"Edward Gray","startDate":"01-09-2022","end_date":"05-09-2022","days":'10',"leave_type":"Personal","reason":"a","status":"Pending"},
+  //   {"txId":'7777',"employeeName":"Nate Jones","startDate":"03-01-2022","end_date":"10-01-2022","days":'4',"leave_type":"Personal","reason":"a","status":"Pending"},
+  //   {"txId":'8888',"employeeName":"Amelia Bennett","startDate":"03-01-2022","end_date":"10-01-2022","days":'5',"leave_type":"Personal","reason":"a","status":"Approved"},
+  //   {"txId":'9999',"employeeName":"Ellie Taylor","startDate":"03-01-2022","end_date":"10-01-2022","days":'10',"leave_type":"Sick","reason":"a","status":"Approved"},];
+
   // Need data
   LeaveData:
-    Leave[] =[{"tx_id":2222,"employee_name":"Shirley Mille","start_date":"28/09/2022","end_date":"29/09/2022","days":5,"leave_type":"Sick","reason":"a","status":"Approved"},
-    {"tx_id":3333,"employee_name":"Hudson O'Brien","start_date":"28-09-2022","end_date":"01-10-2022","days":6,"leave_type":"Vacation","reason":"a","status":"Pending"},
-    {"tx_id":4444,"employee_name":"Lily Wright","start_date":"28-09-2022","end_date":"24-10-2022","days":2,"leave_type":"Personal","reason":"a","status":"Approved"},
-    {"tx_id":5555,"employee_name":"Claire Ryan","start_date":"25-09-2022","end_date":"26-09-2022","days":4,"leave_type":"Bereavement","reason":"a","status":"Approved"},
-    {"tx_id":6666,"employee_name":"Edward Gray","start_date":"01-09-2022","end_date":"05-09-2022","days":10,"leave_type":"Personal","reason":"a","status":"Pending"},
-    {"tx_id":7777,"employee_name":"Nate Jones","start_date":"03-01-2022","end_date":"10-01-2022","days":4,"leave_type":"Personal","reason":"a","status":"Pending"},
-    {"tx_id":8888,"employee_name":"Amelia Bennett","start_date":"03-01-2022","end_date":"10-01-2022","days":5,"leave_type":"Personal","reason":"a","status":"Approved"},
-    {"tx_id":9999,"employee_name":"Ellie Taylor","start_date":"03-01-2022","end_date":"10-01-2022","days":10,"leave_type":"Sick","reason":"a","status":"Approved"},];
+    Leavedb[] =[{"txId":'2222',"employeeName":"Shirley Mille","startDate":"28/09/2022","endDate":"29-09-2022","days":'5',"leaveType":"Sick","reason":"a","status":"Approved"},
+    {"txId":'3333',"employeeName":"Hudson O'Brien","startDate":"28-09-2022","endDate":"01-10-2022","days":'6',"leaveType":"Vacation","reason":"a","status":"Pending"},
+    {"txId":'4444',"employeeName":"Lily Wright","startDate":"28-09-2022","endDate":"24-10-2022","days":'2',"leaveType":"Personal","reason":"a","status":"Approved"},
+    {"txId":'5555',"employeeName":"Claire Ryan","startDate":"25-09-2022","endDate":"26-09-2022","days":'4',"leaveType":"Bereavement","reason":"a","status":"Approved"},
+    {"txId":'6666',"employeeName":"Edward Gray","startDate":"01-09-2022","endDate":"05-09-2022","days":'10',"leaveType":"Personal","reason":"a","status":"Pending"},
+    {"txId":'7777',"employeeName":"Nate Jones","startDate":"03-01-2022","endDate":"10-01-2022","days":'4',"leaveType":"Personal","reason":"a","status":"Pending"},
+    {"txId":'8888',"employeeName":"Amelia Bennett","startDate":"03-01-2022","endDate":"10-01-2022","days":'5',"leaveType":"Personal","reason":"a","status":"Approved"},
+    {"txId":'9999',"employeeName":"Ellie Taylor","startDate":"03-01-2022","endDate":"10-01-2022","days":'10',"leaveType":"Sick","reason":"a","status":"Approved"},];
   // dataSource = PERSON;
   dataSource = new MatTableDataSource(this.LeaveData)  // Need data
   dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
 
   leaveDisplayColumns: string[] = ['txId', 'employeeName', 'startDate', 'endDate', 'days', 'leaveType', 'reason', 'status', 'inEdit'];
-  leavedata: Leavedb = {employee_name: 'zzkathie', start_date: '2023-12-02', end_date: '2023-02-03', leave_type: 'Vacation',
-    status: 'Approved'
-  }
+  // leavedata: Leavedb = {txId: 15, employeeName: 'zzkathie', startDate: '2023-12-02', endDate: '2023-02-03', days: 2, leaveType: 'Vacation', reason: 'a', status: 'Approved'
+  // }
 
   success: string = '';
   errorm: string = '';
 
+  // formattedStart
 
   // dataSource = ELEMENT_DATA;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'inEdit'];
@@ -96,6 +110,7 @@ export class LeaveComponent implements OnInit{
     this.isShowAddForm = false;
     this.isShowEdit = false;
     this.isShowMini = false;
+
   }
   // checkingEndDate(startDate: string, endDate: string) : ValidatorFn {
   //   return (control: AbstractControl): ValidationErrors | null => {
@@ -110,12 +125,12 @@ export class LeaveComponent implements OnInit{
   // }
   showAddForm() {
     this.formGroup.reset({
-      tx_id: '',
-      employee_name: '',
-      start_date: new Date(),
-      end_date: new Date(),
-      days: '',
-      leave_type: '',
+      txId: null,
+      employeeName: '',
+      startDate: new Date(),
+      endDate: new Date(),
+      days: null,
+      leaveType: '',
       reason: '',
       status: ''
 
@@ -124,20 +139,39 @@ export class LeaveComponent implements OnInit{
     this.isShowAddForm = true;
   }
 
+
+
   save() {
     // save then
     // this.isShowAddForm = !this.isShowAddForm;
     // this.isShowEdit = !this.isShowEdit;
     this.isShowEdit = false;
     this.isShowAddForm = false;
-    console.log("In save ---")
+    // console.log("In save ---")
+    //
+    // console.log(this.formGroup.get('start_date')?.value);
+    //
 
-    console.log(this.formGroup.get('start_date')?.value);
+    // Save data
+    //
+  const model = this.formGroup?.value;
+
+  model.txId =  this.formGroup.get('tx_id')?.value ;
+  model.employeeName = this.formGroup.get('employeeName')?.value;
+  // Format date for backend
+  model.startDate = this.formGroup.get('startDate')?.value;
+  model.endDate = this.formGroup.get('endDate')?.value;
+  model.days = this.formGroup.get('days')?.value;
+  model.leaveType = this.formGroup.get('leaveType')?.value;
+  model.reason = this.formGroup.get('reason')?.value;
+  model.status = this.formGroup.get('status')?.value;
+
 
     // If tx_id avail add/create service else update service
     //
-    this.leaveService.addLeavedb(this.leavedata).subscribe(
-      (res: Leave) => {
+    // this.leaveService.addLeavedb(this.leavedata).subscribe(
+    this.leaveService.addLeavedb(model).subscribe(
+      (res: Leavedb) => {
 
         this.success = 'Created sucessfully';
       },
@@ -148,94 +182,38 @@ export class LeaveComponent implements OnInit{
 
     // save to DB
   }
-  add() {
-    console.log('In Add')
 
-    // this.formGroup.get('name')?.setValue('');
-    // this.formGroup.reset();
-    // this.name.setValue('');
+  // showEditForm(element: Leave) {
+  showEditForm(element: Leavedb) {
 
+    let momentA = moment("21/10/14", "DD/MM/YY").format("MM/DD/YY");
+    console.log(`MomentA: ${momentA}`);
 
-    // const groupval = this.formGroup.value;
-    // groupval.name
-    // console.log(`Form Value: ${groupval}`)
-  }
+    let startyyyymmdd = moment(element.startDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+    let endyyyymmdd = moment(element.endDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 
-  showEditForm(element: Leave) {
+    console.log(`Date edit in showEdit: ${element.startDate}`) // convert this for Edit field datepicker
 
-    console.log(`Date edit: ${element.start_date}`) // convert this for Edit field datepicker
-
-    // Date(moment("21/10/2023", "DD/MM/YYYY").format("YYYY-MM-DD"))
-    // const formatStart =  moment("21/10/14", "DD/MM/YY").format("MM/DD/YY");
-    // const newdate = new Date(formatStart)
-    const ti = `${element.tx_id}`;
+    // let dateformat = element.startDate;
+    // let start = this.format(dateformat);
+    // console.log(`Returned date formatted: ${start}`)
 
 
-    this.formGroup.get('tx_id')?.setValue(ti);
-    this.formGroup.get('employee_name')?.setValue(element.employee_name);
-    this.formGroup.get('start_date')?.setValue(new Date('2023-12-12'));
-    // this.formGroup.get('end_date')?.setValue(element.end_date);
-    this.formGroup.get('end_date')?.setValue(new Date('2023-12-12'));
-    // this.formGroup.get('start_date')?.setValue(element.start_date);
-    // this.formGroup.get('end_date')?.setValue(element.end_date);
-    this.formGroup.get('days')?.setValue(`${element.days}`);
-    this.formGroup.get('leave_type')?.setValue(element.leave_type);
-    this.formGroup.get('reason')?.setValue(element.reason);
+    this.formGroup.get('txId')?.setValue(`${element.txId}`?? '');
+    this.formGroup.get('employeeName')?.setValue(`${element.employeeName}` ?? '');
+    this.formGroup.get('startDate')?.setValue(new Date(startyyyymmdd));
+    // this.formGroup.get('endDate')?.setValue(element.endate);
+    this.formGroup.get('endDate')?.setValue(new Date(endyyyymmdd));
+    this.formGroup.get('days')?.setValue(`${element.days}` ?? '');
+    this.formGroup.get('leaveType')?.setValue(element.leaveType ?? '');
+    this.formGroup.get('reason')?.setValue(element.reason ?? '');
+    this.formGroup.get('status')?.setValue(element.status ?? '');
     //  Needs for displaying the form
     this.isShowEdit = true;
 
   }
 
-  // private formatDate(date)  {
-  //   const d = new Date(date);
-  //   let month = '' + (d.getMonth() + 1);
-  //   let day = '' + d.getDate();
-  //   const year = d.getFullYear();
-  //   if (month.length < 2) month = '0' + month;
-  //   if (day.length < 2) day = '0' + day;
-  //   return [year, month, day].join('-');
-  // }
-  // edit(element: PeriodicElement) {
-  // //   Call Edit Service
-  // // const a = element.name;
-  // //   console.log(`Name for editing: ${a}` )
-  // }
 
-
-  // showMiniEditForm(element: Person) {
-    // this.editMini(element);
-    // Load controls with values
-    // this.isShowMini = true;
-    // this.formGroup.get('name')?.setValue(element.name);
-    // this.formGroup.get('start_date')?.setValue(element.start_date);
-    // this.formGroup.get('end_date')?.setValue(element.end_date);
-
-
-    // const el: Person = element;
-    // const startdt = new Date(el.start_date);
-    // const enddt = new Date(el.end_date)
-
-    // this.formGroup.setValue({
-    //   name: element.name
-    //   // start_date: '01-01-2023',
-    //   // end_date: '01-01-2023'
-    //   // start_date: startdt.toString(),
-    //   // end_date: enddt.toString()
-    // });
-    // this.name.setValue(element.name);
-    // this.age.setValue(element.age);
-    // or this.formGroup.get('name')?.setValue()
-  // }
-
-
-  // editMini() {
-  //   // call Service
-  //   // this.formGroup.setValue(element);
-  //
-  //
-  //   // console.log(`Element: ${element.name} . '   ' . ${element.start_date}`);
-  //   // console.log(`In editMini --`);
-  // }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -46,7 +46,7 @@ export class LeaveService {
     );
   }
 
-  addLeavedb(leavedata: Leavedb) {
+  addLeavedb(leavedata: any) {
     console.log('In Service call - addTeLeave')
     return this.http.post(`${this.baseUrl}/add`, { data: leavedata }).pipe (
       map((res: any) => {

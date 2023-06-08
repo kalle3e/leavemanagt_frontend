@@ -48,9 +48,8 @@ export class AppComponent implements OnInit {
   jsondata: Jsondata | undefined;
 
   testdata: Testdata = {name: 'Kathie', age: 20};
-  leavedata: Leavedb = {employee_name: 'zzkathie', start_date: '2023-12-02', end_date: '2023-02-03', leave_type: 'Vacation',
-      status: 'Approved'
-      }
+  // leavedata: Leavedb = {txId: '15', employeeName: 'zzkathie', startDate: '2023-12-02', endDate: '2023-02-03', days: '2', leaveType: 'Vacation', reason: 'a', status: 'Approved'
+  // }
 
   success: string = '';
   errorm: string = '';
@@ -95,13 +94,13 @@ export class AppComponent implements OnInit {
   //   );
   // }
   addLeave() {
-    this.leaveService.addLeavedb(this.leavedata).subscribe(
-      (res: Leave) => {
-
-        this.success = 'Created sucessfully';
-      },
-      (err) => (this.errorm = err.message)
-    );
+    // this.leaveService.addLeavedb(this.leavedata).subscribe(
+    //   (res: Leave) => {
+    //
+    //     this.success = 'Created sucessfully';
+    //   },
+    //   (err) => (this.errorm = err.message)
+    // );
   }
   onSubmit() {}
 

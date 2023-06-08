@@ -34,23 +34,23 @@
 
     <ng-container matColumnDef="txId">
       <th mat-header-cell *matHeaderCellDef> Tx Id </th>
-      <td mat-cell *matCellDef="let element"> {{element.tx_id}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.txId}} </td>
     </ng-container>
 
     <ng-container matColumnDef="employeeName">
       <th mat-header-cell *matHeaderCellDef> Employee Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.employee_name}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.employeeName}} </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="startDate">
       <th mat-header-cell *matHeaderCellDef> Start Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
     </ng-container>
 
     <ng-container matColumnDef="endDate">
       <th mat-header-cell *matHeaderCellDef> End Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.end_date}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
     </ng-container>
     <ng-container matColumnDef="days">
       <th mat-header-cell *matHeaderCellDef> Days </th>
@@ -58,7 +58,7 @@
     </ng-container>
     <ng-container matColumnDef="leaveType">
       <th mat-header-cell *matHeaderCellDef> Leave Type </th>
-      <td mat-cell *matCellDef="let element"> {{element.leave_type}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.leaveType}} </td>
     </ng-container>
     <ng-container matColumnDef="reason">
       <th mat-header-cell *matHeaderCellDef> Reason </th>
@@ -153,28 +153,28 @@
         <div *ngIf="!isShowAddForm">
           <mat-form-field fxFill>
             <mat-label>Tx Id</mat-label>
-            <input matInput  formControlName="tx_id">
+            <input matInput  formControlName="txId">
           </mat-form-field>
         </div>
         <mat-form-field fxFill>
           <mat-label>Employee Name</mat-label>
-          <input matInput  formControlName="employee_name">
+          <input matInput  formControlName="employeeName">
         </mat-form-field>
 
         <mat-form-field fxFill>
           <mat-label>Start Date</mat-label>
-          <input matInput [matDatepicker]="start_date" formControlName="start_date" (click)="start_date.open()">
+          <input matInput [matDatepicker]="startDate" formControlName="startDate" (click)="startDate.open()">
           <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="start_date"></mat-datepicker-toggle>
-          <mat-datepicker #start_date></mat-datepicker>
+          <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field fxFill>
           <mat-label>End Date</mat-label>
-          <input matInput [matDatepicker]="end_date" formControlName="end_date" (click)="end_date.open()">
+          <input matInput [matDatepicker]="endDate" formControlName="endDate" (click)="endDate.open()">
           <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="end_date"></mat-datepicker-toggle>
-          <mat-datepicker #end_date></mat-datepicker>
+          <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field fxFill>
@@ -189,7 +189,7 @@
 <!--        </select>-->
         <mat-form-field fxFill>
           <mat-label>LeaveType</mat-label>
-          <mat-select matNativeControl required formControlName="leave_type">
+          <mat-select matNativeControl required formControlName="leaveType">
             <mat-option *ngFor="let leavetyp of leavetyps" [value]="leavetyp.value">
               {{leavetyp.viewValue}}
             </mat-option>
