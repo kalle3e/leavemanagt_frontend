@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     console.log("In ngOnInit :");
 
-    this.getLeave();
+    // this.getLeave();
     // this.addLeave();
   }
 
