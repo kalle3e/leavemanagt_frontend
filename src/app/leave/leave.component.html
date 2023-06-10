@@ -24,7 +24,7 @@
 
   </div>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="LeaveData" class="mat-elevation-z8">
 
 
     <!--- Note that these columns can be defined in any order.
@@ -187,11 +187,14 @@
 <!--          <option value="mercedes">Mercedes</option>-->
 <!--          <option value="audi">Audi</option>-->
 <!--        </select>-->
+<!--        <mat-option *ngFor="let leavetyp of leavetyps" [value]="leavetyp.value">-->
+<!--          {{leavetyp.viewValue}}-->
+<!--        </mat-option>-->
         <mat-form-field fxFill>
           <mat-label>LeaveType</mat-label>
           <mat-select matNativeControl required formControlName="leaveType">
             <mat-option *ngFor="let leavetyp of leavetyps" [value]="leavetyp.value">
-              {{leavetyp.viewValue}}
+              {{leavetyp.value}}
             </mat-option>
           </mat-select>
 <!--          <input matInput  formControlName="leave_type">-->

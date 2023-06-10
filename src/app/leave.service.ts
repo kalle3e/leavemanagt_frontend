@@ -31,9 +31,9 @@ export class LeaveService {
   // }
 
   getLeave() {
-    return this.http.get<Leave[]>(this.baseUrl).pipe(
-      map((res: Leave[]) => {
-        return res;
+    return this.http.get(this.baseUrl).pipe(
+      map((res: any) => {
+        return res['data'];
       })
     );
   }

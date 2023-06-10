@@ -11,7 +11,7 @@ import {Jsondata} from "./jsondata";
 import { MatTableModule  } from "@angular/material/table";
 import { Testdata } from "./Testdata";
 import { Leavedb } from "./Leavedb";
-
+import { MatTableDataSource } from "@angular/material/table";
 
 
 @Component({
@@ -23,6 +23,8 @@ export class AppComponent implements OnInit {
   title = 'leavemngt';
 
   formGroup = FormGroup;
+  dataSource = new MatTableDataSource();
+
   constructor(private fb: FormBuilder,
               private leaveService: LeaveService
   )
@@ -55,7 +57,7 @@ export class AppComponent implements OnInit {
   errorm: string = '';
 
 
-  leave: Leave[] = [];
+  leave: Leavedb[] = [];
 
 
 
@@ -81,7 +83,8 @@ export class AppComponent implements OnInit {
   }
   getLeave() {
     this.leaveService.getLeave().subscribe(
-      res => this.leave = res
+      // res => this.leave = res.
+                  res => this.dataSource.data = res
     );
   }
 

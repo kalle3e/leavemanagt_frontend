@@ -12,7 +12,6 @@ import * as moment from 'moment';
 
 interface Leavetyps {
   value: string;
-  viewValue: string;
 }
 @Component({
   selector: 'app-leave',
@@ -21,13 +20,21 @@ interface Leavetyps {
 })
 export class LeaveComponent implements OnInit{
 
+  LeaveData: any;
   leavetyps: Leavetyps[] = [
-    {value: "personal-0", viewValue: "Personal"},
-    {value: "vacation-0", viewValue: "Vacation"},
-    {value: "bereavement-0", viewValue: "Bereavement"},
-    {value: "sick-0", viewValue: "Sick"},
+    {value: "Personal"},
+    {value: "Vacation"},
+    {value: "Bereavement"},
+    {value: "Sick"},
 
   ]
+  // leavetyps: Leavetyps[] = [
+  //   {value: "personal-0", viewValue: "Personal"},
+  //   {value: "vacation-0", viewValue: "Vacation"},
+  //   {value: "bereavement-0", viewValue: "Bereavement"},
+  //   {value: "sick-0", viewValue: "Sick"},
+  //
+  // ]
   personFilters: PersonFilter[]=[];
   isShowEdit: boolean = false;
   isShowMini: boolean = false;
@@ -71,19 +78,25 @@ export class LeaveComponent implements OnInit{
   //   {"txId":'8888',"employeeName":"Amelia Bennett","startDate":"03-01-2022","end_date":"10-01-2022","days":'5',"leave_type":"Personal","reason":"a","status":"Approved"},
   //   {"txId":'9999',"employeeName":"Ellie Taylor","startDate":"03-01-2022","end_date":"10-01-2022","days":'10',"leave_type":"Sick","reason":"a","status":"Approved"},];
 
+  // LeaveData: Leavedb[] = [];
   // Need data
-  LeaveData:
-    Leavedb[] =[{"txId":'2222',"employeeName":"Shirley Mille","startDate":"28/09/2022","endDate":"29-09-2022","days":'5',"leaveType":"Sick","reason":"a","status":"Approved"},
-    {"txId":'2',"employeeName":"Hudson O'Brien","startDate":"28-09-2022","endDate":"01-10-2022","days":'6',"leaveType":"Vacation","reason":"a","status":"Pending"},
-    {"txId":'4444',"employeeName":"Lily Wright","startDate":"28-09-2022","endDate":"24-10-2022","days":'2',"leaveType":"Personal","reason":"a","status":"Approved"},
-    {"txId":'5555',"employeeName":"Claire Ryan","startDate":"25-09-2022","endDate":"26-09-2022","days":'4',"leaveType":"Bereavement","reason":"a","status":"Approved"},
-    {"txId":'6666',"employeeName":"Edward Gray","startDate":"01-09-2022","endDate":"05-09-2022","days":'10',"leaveType":"Personal","reason":"a","status":"Pending"},
-    {"txId":'7777',"employeeName":"Nate Jones","startDate":"03-01-2022","endDate":"10-01-2022","days":'4',"leaveType":"Personal","reason":"a","status":"Pending"},
-    {"txId":'8888',"employeeName":"Amelia Bennett","startDate":"03-01-2022","endDate":"10-01-2022","days":'5',"leaveType":"Personal","reason":"a","status":"Approved"},
-    {"txId":'9999',"employeeName":"Ellie Taylor","startDate":"03-01-2022","endDate":"10-01-2022","days":'10',"leaveType":"Sick","reason":"a","status":"Approved"},];
-  // dataSource = PERSON;
-  dataSource = new MatTableDataSource(this.LeaveData)  // Need data
-  dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
+  // LeaveData:
+  //   Leavedb[] =[{"txId":'2222',"employeeName":"Shirley Mille","startDate":"28/09/2022","endDate":"29-09-2022","days":'5',"leaveType":"Sick","reason":"a","status":"Approved"},
+  //   {"txId":'2',"employeeName":"Hudson O'Brien","startDate":"28-09-2022","endDate":"01-10-2022","days":'6',"leaveType":"Vacation","reason":"a","status":"Pending"},
+  //   {"txId":'4444',"employeeName":"Lily Wright","startDate":"28-09-2022","endDate":"24-10-2022","days":'2',"leaveType":"Personal","reason":"a","status":"Approved"},
+  //   {"txId":'5555',"employeeName":"Claire Ryan","startDate":"25-09-2022","endDate":"26-09-2022","days":'4',"leaveType":"Bereavement","reason":"a","status":"Approved"},
+  //   {"txId":'6666',"employeeName":"Edward Gray","startDate":"01-09-2022","endDate":"05-09-2022","days":'10',"leaveType":"Personal","reason":"a","status":"Pending"},
+  //   {"txId":'7777',"employeeName":"Nate Jones","startDate":"03-01-2022","endDate":"10-01-2022","days":'4',"leaveType":"Personal","reason":"a","status":"Pending"},
+  //   {"txId":'8888',"employeeName":"Amelia Bennett","startDate":"03-01-2022","endDate":"10-01-2022","days":'5',"leaveType":"Personal","reason":"a","status":"Approved"},
+  //   {"txId":'9999',"employeeName":"Ellie Taylor","startDate":"03-01-2022","endDate":"10-01-2022","days":'10',"leaveType":"Sick","reason":"a","status":"Approved"},];
+  // // dataSource = PERSON;
+  // dataSource = new MatTableDataSource(this.LeaveData)  // Need data
+  dataSourceFilters = new MatTableDataSource(); // Need data
+
+  dataSource = new MatTableDataSource(); // Need data
+  // dataSourceFilters = new MatTableDataSource() = this.LeaveData; // Need data
+  // dataSource = this.LeaveData;
+  // dataSourceFilters = this.LeaveData;
 
   leaveDisplayColumns: string[] = ['txId', 'employeeName', 'startDate', 'endDate', 'days', 'leaveType', 'reason', 'status', 'inEdit'];
   // leavedata: Leavedb = {txId: 15, employeeName: 'zzkathie', startDate: '2023-12-02', endDate: '2023-02-03', days: 2, leaveType: 'Vacation', reason: 'a', status: 'Approved'
@@ -91,6 +104,7 @@ export class LeaveComponent implements OnInit{
 
   success: string = '';
   errorm: string = '';
+
 
   // formattedStart
 
@@ -102,7 +116,11 @@ export class LeaveComponent implements OnInit{
   {}
 
   ngOnInit(): void {
-    console.log("In console.log ----")
+    this.getLeave();
+    // this.dataSource = this.LeaveData;
+    this.dataSource = new MatTableDataSource(this.LeaveData)  // Need data
+    this.dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
+
     this.dataSourceFilters.filterPredicate = function (record,filter) {
       return true;
     }
@@ -123,6 +141,17 @@ export class LeaveComponent implements OnInit{
   //
   //   }
   // }
+  getLeave() {
+    this.leaveService.getLeave().subscribe(
+      // res => this.leave = res.
+      (res: Leavedb[]) => {
+                   // this.LeaveData = res;
+                    this.LeaveData = res;
+        // console.log(`Array length: ${this.LeaveData.length}`);
+      }
+
+    );
+  }
   showAddForm() {
     this.formGroup.reset({
       txId: null,
@@ -178,13 +207,11 @@ export class LeaveComponent implements OnInit{
       },
       (err) => (this.errorm = err.message)
     );
-    // const data = this.formGroup.value;
-    // console.log(`Data to save: ${data.employee_name}`)
-
-    // save to DB
+    // Load data for datasource
   }
 
   // showEditForm(element: Leave) {
+
   showEditForm(element: Leavedb) {
 
     let momentA = moment("21/10/14", "DD/MM/YY").format("MM/DD/YY");

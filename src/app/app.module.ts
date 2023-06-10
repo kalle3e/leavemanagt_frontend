@@ -18,13 +18,15 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatTableModule } from "@angular/material/table";
 import { LeaveComponent } from "./leave/leave.component";
 import { MatLegacyNativeDateModule } from "@angular/material/legacy-core";
+import { TetableComponent } from './tetable/tetable.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LeaveComponent
+    LeaveComponent,
+    TetableComponent
 
 
 
