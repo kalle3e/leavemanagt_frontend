@@ -22,6 +22,7 @@ import { TetableComponent } from './tetable/tetable.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

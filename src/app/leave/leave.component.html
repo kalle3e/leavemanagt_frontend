@@ -1,6 +1,6 @@
 <!---->
 <form [formGroup]="formGroup" (ngSubmit)="save()">
-<div *ngIf="!(isShowEdit || isShowAddForm) ">
+<div *ngIf="!(isShowEdit || isShowAdd)">
 <mat-card>
   <div style="margin-top: 20px; margin-left: 10px">
     <h2>LATEST LEAVE APPLICATIONS</h2>
@@ -15,12 +15,11 @@
 
 
     <div style="margin-left: 90px">
-      <button mat-raised-button color="primary" (click)="showAddForm()" [disabled]="isShowEdit">Add</button>
+      <button mat-raised-button color="primary" (click)="showAdd()" [disabled]="isShowEdit">Add</button>
     </div>
 <!--      <div></div>-->
     <div style="margin-left: 60px"><h3 style="color: rgba(54,140,57);">Record added</h3></div>
-<!--      <div>Record added</div>-->
-<!--      <div>Record added</div>-->
+
 
   </div>
 
@@ -74,7 +73,7 @@
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element">
         <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end" style="margin-top: 20px">
-          <button mat-raised-button color="primary" type="button" (click)="showEditForm(element)" [disabled]="isShowAddForm || isShowEdit">edit</button>
+          <button mat-raised-button color="primary" type="button" (click)="showEditForm(element)" [disabled]="isShowAdd || isShowEdit">edit</button>
         </div>
       </mat-cell>
     </ng-container>
@@ -83,61 +82,107 @@
     <tr mat-row *matRowDef="let row; columns: leaveDisplayColumns;"></tr>
   </table>
 </mat-card>
+<!--</div>-->
 </div>
 
-<!--<div *ngIf="isShowAddForm">-->
-<!--  <h3>Add Form</h3>-->
-<!--  <form [formGroup]="formGroup" (ngSubmit)="add()" >-->
-<!--    <label for="name">Name</label>-->
-<!--    <input id="name" type="text" formControlName="name" >-->
+<!--Add Form -->
+  <!--ADD LEAVE-->   <!--ADD LEAVE-->
+  <div *ngIf="isShowAdd">
+    <mat-card>
+      <mat-card-title>Create Leave</mat-card-title>
 
-<!--    <label for="startDate">Start Date</label>-->
-<!--    <input id="startDate" type="date" formControlName="start_date" >-->
+        <form [formGroup]="formGroup" (ngSubmit)="save()">
+          <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 0px;">
 
-<!--    <label for="endDate">End Date</label>-->
-<!--    <input id="endDate" type="date" formControlName="end_date" >-->
 
-<!--    <button type="submit" [disabled]="!formGroup.valid"></button>-->
-<!--  </form>-->
-<!--</div>-->
+            <div style="margin-left: 0px">
+              <div fxLayout="row">
+                <div style="margin-left: 20px">
+                  <button type="submit" mat-raised-button color="primary">Add</button>
+                </div>
+                <div style="margin-left: 20px;margin-right: 20px">
+                  <button type="button" mat-raised-button color="warn" (click)="cancelAddForm()">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-<!--<div *ngIf="isShowMini">-->
-<!--  <h3>Edit Form</h3>-->
-<!--  <form [formGroup]="formGroup" (ngSubmit)="editMini()" >-->
-<!--    <label for="name">Name</label>-->
-<!--    <input id="name" type="text" formControlName="name" >-->
+          <mat-form-field fxFill>
+            <mat-label>Employee Name</mat-label>
+            <input matInput  formControlName="employeeName">
+          </mat-form-field>
 
-<!--    <label for="startDate">Start Date</label>-->
-<!--    <input id="startDate" type="text" formControlName="start_date" >-->
+          <mat-form-field fxFill>
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="startDate" formControlName="startDate" (click)="startDate.open()">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
 
-<!--    <label for="endDate">End Date</label>-->
-<!--    <input id="endDate" type="text" formControlName="end_date" >-->
+          <mat-form-field fxFill>
+            <mat-label>End Date</mat-label>
+            <input matInput [matDatepicker]="endDate" formControlName="endDate" (click)="endDate.open()">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </mat-form-field>
 
-<!--    <button type="submit" [disabled]="!formGroup.valid"></button>-->
+          <mat-form-field fxFill>
+            <mat-label>Days</mat-label>
+            <input matInput  formControlName="days">
+          </mat-form-field>
 
-<!--  </form>-->
-<!--</div>-->
+          <mat-form-field fxFill>
+            <mat-label>LeaveType</mat-label>
+            <mat-select matNativeControl required formControlName="leaveType">
+              <mat-option *ngFor="let leavetyp of leavetyps" [value]="leavetyp.value">
+                {{leavetyp.value}}
+              </mat-option>
+            </mat-select>
 
+          </mat-form-field>
+          <mat-form-field fxFill>
+            <mat-label>Reason</mat-label>
+
+            <input matInput  formControlName="reason">
+          </mat-form-field>
+          <mat-form-field fxFill>
+            <mat-label>Status</mat-label>
+            <input matInput  formControlName="status">
+          </mat-form-field>
+
+        </form>
+    </mat-card>
+  </div>
+<!--Add Form-->
 <!--LEAVE DETAILS-->   <!--LEAVE DETAILS-->
-<div *ngIf="isShowEdit || isShowAddForm">
+<div *ngIf="isShowEdit">
   <mat-card>
     <div style="margin-left: 10px; margin-top: 20px; ">
       <div >
       <div *ngIf="isShowEdit">
         <mat-card-title>Leave Details</mat-card-title>
       </div>
-      <div *ngIf="isShowAddForm">
+      <div *ngIf="isShowAdd">
         <mat-card-title>Create Leave</mat-card-title>
       </div>
     </div>
 
 
       <form [formGroup]="formGroup" (ngSubmit)="save()">
-        <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 30px;">
+        <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 0px;">
 
 
-          <div style="width: 50px; margin-left: 80px">
-            <button type="submit" mat-raised-button color="primary">Save</button>
+          <div style="margin-left: 0px">
+            <div fxLayout="row">
+              <div style="margin-left: 20px">
+                <button type="submit" mat-raised-button color="primary">Save</button>
+              </div>
+              <div style="margin-left: 20px;margin-right: 20px">
+                <button type="button" mat-raised-button color="warn" (click)="cancelEditForm()">Cancel</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -150,7 +195,7 @@
 <!--        </div>-->
 
 
-        <div *ngIf="!isShowAddForm">
+        <div *ngIf="!isShowAdd">
           <mat-form-field fxFill>
             <mat-label>Tx Id</mat-label>
             <input matInput  formControlName="txId">

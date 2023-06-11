@@ -9,6 +9,8 @@ import { Leavedb } from "../Leavedb";
 import { LeaveService } from "../leave.service";
 import  { Moment } from 'moment';
 import * as moment from 'moment';
+import { FlexModule } from "@ngbracket/ngx-layout";
+
 
 interface Leavetyps {
   value: string;
@@ -38,7 +40,9 @@ export class LeaveComponent implements OnInit{
   personFilters: PersonFilter[]=[];
   isShowEdit: boolean = false;
   isShowMini: boolean = false;
+  isShowAdd: boolean = false;
   isShowAddForm: boolean = false;
+  isShowEditForm: boolean = false;
 
   leaveType: string[] = ['Personal', 'Sick', 'Vacation', 'Bereavement'];
 
@@ -69,7 +73,7 @@ export class LeaveComponent implements OnInit{
   // }
   //   Using old names (Leave[]; spec tx_id as number)
   // LeaveData:
-  //   Leave[] =[{"tx_id":'2222',"employeeName":"Shirley Mille","startDate":"28/09/2022","endDate":"29/09/2022","days":'5',"leave_type":"Sick","reason":"a","status":"Approved"},
+  //   Leave[] =[{"tx_id":'2222',"employeeName":"Shirley Mille","startDate":"28-09-2022","endDate":"29/09/2022","days":'5',"leave_type":"Sick","reason":"a","status":"Approved"},
   //   {"txId":'3333',"employeeName":"Hudson O'Brien","startDate":"28-09-2022","end_date":"01-10-2022","days":'6',"leave_type":"Vacation","reason":"a","status":"Pending"},
   //   {"txId":'4444',"employeeName":"Lily Wright","startDate":"28-09-2022","end_date":"24-10-2022","days":'2',"leave_type":"Personal","reason":"a","status":"Approved"},
   //   {"txId":'5555',"employeeName":"Claire Ryan","startDate":"25-09-2022","end_date":"26-09-2022","days":'4',"leave_type":"Bereavement","reason":"a","status":"Approved"},
@@ -81,7 +85,7 @@ export class LeaveComponent implements OnInit{
   // LeaveData: Leavedb[] = [];
   // Need data
   // LeaveData:
-  //   Leavedb[] =[{"txId":'2222',"employeeName":"Shirley Mille","startDate":"28/09/2022","endDate":"29-09-2022","days":'5',"leaveType":"Sick","reason":"a","status":"Approved"},
+  //   Leavedb[] =[{"txId":'2222',"employeeName":"Shirley Mille","startDate":"28-09-2022","endDate":"29-09-2022","days":'5',"leaveType":"Sick","reason":"a","status":"Approved"},
   //   {"txId":'2',"employeeName":"Hudson O'Brien","startDate":"28-09-2022","endDate":"01-10-2022","days":'6',"leaveType":"Vacation","reason":"a","status":"Pending"},
   //   {"txId":'4444',"employeeName":"Lily Wright","startDate":"28-09-2022","endDate":"24-10-2022","days":'2',"leaveType":"Personal","reason":"a","status":"Approved"},
   //   {"txId":'5555',"employeeName":"Claire Ryan","startDate":"25-09-2022","endDate":"26-09-2022","days":'4',"leaveType":"Bereavement","reason":"a","status":"Approved"},
@@ -91,10 +95,10 @@ export class LeaveComponent implements OnInit{
   //   {"txId":'9999',"employeeName":"Ellie Taylor","startDate":"03-01-2022","endDate":"10-01-2022","days":'10',"leaveType":"Sick","reason":"a","status":"Approved"},];
   // // dataSource = PERSON;
   // dataSource = new MatTableDataSource(this.LeaveData)  // Need data
-  dataSourceFilters = new MatTableDataSource(); // Need data
+  // dataSourceFilters = new MatTableDataSource(); // Need data
 
   dataSource = new MatTableDataSource(); // Need data
-  // dataSourceFilters = new MatTableDataSource() = this.LeaveData; // Need data
+  dataSourceFilters = new MatTableDataSource(); // Need data
   // dataSource = this.LeaveData;
   // dataSourceFilters = this.LeaveData;
 
@@ -104,6 +108,11 @@ export class LeaveComponent implements OnInit{
 
   success: string = '';
   errorm: string = '';
+  // isHide: boolean = false;
+  isForm: boolean = false;
+  isList: boolean = false;
+  isEditForm: boolean = false;
+  isAddForm: boolean = false;
 
 
   // formattedStart
@@ -120,14 +129,16 @@ export class LeaveComponent implements OnInit{
     // this.dataSource = this.LeaveData;
     this.dataSource = new MatTableDataSource(this.LeaveData)  // Need data
     this.dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
+    // this.dataSourceFilters = this.LeaveData;
 
     this.dataSourceFilters.filterPredicate = function (record,filter) {
       return true;
     }
     //Resets flags
-    this.isShowAddForm = false;
     this.isShowEdit = false;
     this.isShowMini = false;
+    this.isEditForm = false;
+    this.isShowAddForm = false;
 
   }
   // checkingEndDate(startDate: string, endDate: string) : ValidatorFn {
@@ -152,7 +163,7 @@ export class LeaveComponent implements OnInit{
 
     );
   }
-  showAddForm() {
+  showAdd() {
     this.formGroup.reset({
       txId: null,
       employeeName: '',
@@ -165,37 +176,52 @@ export class LeaveComponent implements OnInit{
 
     });
 
-    this.isShowAddForm = true;
+    this.isForm = !this.isForm;
   }
 
 
 
   save() {
-    // save then
-    // this.isShowAddForm = !this.isShowAddForm;
-    // this.isShowEdit = !this.isShowEdit;
-    this.isShowEdit = false;
-    this.isShowAddForm = false;
-    // console.log("In save ---")
-    //
-    // console.log(this.formGroup.get('start_date')?.value);
-    //
+    this.isEditForm = false;
 
-    // Save data
-    //
-  const model = this.formGroup?.value;
+    const model = this.formGroup?.value;
 
   model.txId =  this.formGroup.get('txId')?.value ;
   model.employeeName = this.formGroup.get('employeeName')?.value;
   // Format date for backend
+
+  //** In save(), model.startDate: Thu Jun 15 2023 10:00:00 GMT+1000 (Australian Eastern Standard Time)
+
+  // let startFormat = moment.parseFormat(model.startDate);
+
+    // const startDb = moment(model.startDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
+    // const endDb = moment(model.endDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
+
+
+    //   let splitStart = model?.startDate.split(' ');
+    // console.log(`Moment format long date from Edit Input Thu Jun 15 2023 10:00:00`)
+    // console.log(startDb);
+    // console.log(endDb);
+
+  const startFormat = this.formGroup.get('startDate')?.value;
   model.startDate = this.formGroup.get('startDate')?.value;
   model.endDate = this.formGroup.get('endDate')?.value;
+    const startDb = moment(model.startDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
+    const endDb = moment(model.endDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
+    console.log(`Typeof startDB: ${typeof startDb}`) ;
+    console.log(`Moment format long date from Edit Input Thu Jun 15 2023 10:00:00`)
+    console.log(startDb);
+    console.log(endDb);
+    model.startDate = new Date(startDb);
+    model.endDate = new Date(endDb);
+    console.log(`Typeof model.startDate new Date() ${typeof model.startDate}`)
   model.days = this.formGroup.get('days')?.value;
   model.leaveType = this.formGroup.get('leaveType')?.value;
   model.reason = this.formGroup.get('reason')?.value;
   model.status = this.formGroup.get('status')?.value;
 
   console.log(`LeaveType: ${model.leaveType}`);
+  console.log(`In save(), model.startDate: ${model.startDate}`)
 
     // If tx_id avail add/create service else update service
     //
@@ -217,20 +243,24 @@ export class LeaveComponent implements OnInit{
     let momentA = moment("21/10/14", "DD/MM/YY").format("MM/DD/YY");
     console.log(`MomentA: ${momentA}`);
 
-    let startyyyymmdd = moment(element.startDate, "DD/MM/YYYY").format("YYYY-MM-DD");
-    let endyyyymmdd = moment(element.endDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+    let startyyyymmdd = moment(element.startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+    let endyyyymmdd = moment(element.endDate, "YYYY-MM-DD").format("YYYY-MM-DD");
 
     console.log(`Date edit in showEdit: ${element.startDate}`) // convert this for Edit field datepicker
 
     // let dateformat = element.startDate;
     // let start = this.format(dateformat);
     // console.log(`Returned date formatted: ${start}`)
+    console.log(`Date to edit: ${element.startDate}`);
+    console.log(`Date after momentFormt: ${startyyyymmdd}`)
 
 
     this.formGroup.get('txId')?.setValue(`${element.txId}`?? '');
     this.formGroup.get('employeeName')?.setValue(`${element.employeeName}` ?? '');
     this.formGroup.get('startDate')?.setValue(new Date(startyyyymmdd));
+    // this.formGroup.get('startDate')?.setValue(new Date(element.startDate));
     // this.formGroup.get('endDate')?.setValue(element.endate);
+    // this.formGroup.get('endDate')?.setValue(new Date(element.endDate));
     this.formGroup.get('endDate')?.setValue(new Date(endyyyymmdd));
     this.formGroup.get('days')?.setValue(`${element.days}` ?? '');
     this.formGroup.get('leaveType')?.setValue(element.leaveType ?? '');
@@ -241,6 +271,14 @@ export class LeaveComponent implements OnInit{
 
   }
 
+  cancelEditForm() {
+    this.isList = !this.isList;
+    this.isShowEdit = !this.isShowEdit
+  }
+  cancelAddForm() {
+    this.isList = !this.isList;
+    this.isShowAdd = !this.isShowAdd
+  }
 
 
   applyFilter(event: Event) {
