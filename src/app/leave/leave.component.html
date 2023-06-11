@@ -91,18 +91,14 @@
     <mat-card>
       <mat-card-title>Create Leave</mat-card-title>
 
-        <form [formGroup]="formGroup" (ngSubmit)="save()">
+        <form [formGroup]="formGroup" (ngSubmit)="add()">
           <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 0px;">
-
-
-            <div style="margin-left: 0px">
-              <div fxLayout="row">
-                <div style="margin-left: 20px">
-                  <button type="submit" mat-raised-button color="primary">Add</button>
-                </div>
-                <div style="margin-left: 20px;margin-right: 20px">
-                  <button type="button" mat-raised-button color="warn" (click)="cancelAddForm()">Cancel</button>
-                </div>
+            <div fxLayout="row" style="margin-bottom: 5px">
+              <div style="margin-left: 20px">
+                <button type="submit" mat-raised-button color="primary" [disabled]="!formGroup.valid">Add</button>
+              </div>
+              <div style="margin-left: 20px;margin-right: 20px">
+                <button type="button" mat-raised-button color="warn" (click)="cancelAddForm()">Cancel</button>
               </div>
             </div>
           </div>
@@ -175,9 +171,9 @@
 
 
           <div style="margin-left: 0px">
-            <div fxLayout="row">
+            <div fxLayout="row" style="margin-bottom: 0px">
               <div style="margin-left: 20px">
-                <button type="submit" mat-raised-button color="primary">Save</button>
+                <button type="submit" mat-raised-button color="primary" [disabled]="!formGroup.valid">Save</button>
               </div>
               <div style="margin-left: 20px;margin-right: 20px">
                 <button type="button" mat-raised-button color="warn" (click)="cancelEditForm()">Cancel</button>
@@ -195,7 +191,7 @@
 <!--        </div>-->
 
 
-        <div *ngIf="!isShowAdd">
+        <div *ngIf="!isShowAdd" style="margin-top: 10px">
           <mat-form-field fxFill>
             <mat-label>Tx Id</mat-label>
             <input matInput  formControlName="txId">

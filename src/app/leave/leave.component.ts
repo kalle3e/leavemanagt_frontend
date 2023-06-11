@@ -113,7 +113,7 @@ export class LeaveComponent implements OnInit{
   isList: boolean = false;
   isEditForm: boolean = false;
   isAddForm: boolean = false;
-
+  isCreate: boolean = false;
 
   // formattedStart
 
@@ -177,44 +177,41 @@ export class LeaveComponent implements OnInit{
     });
 
     this.isForm = !this.isForm;
+    this.isShowAdd = true;
   }
 
-
+  add() {
+    this.isCreate = true;
+    this.save();
+  }
 
   save() {
-    this.isEditForm = false;
+    if (this.isCreate) {
+      this.isCreate = false;
+      this.isShowAdd = false;
+    } else {
+      this.isShowEdit = false;
+    }
 
     const model = this.formGroup?.value;
 
   model.txId =  this.formGroup.get('txId')?.value ;
   model.employeeName = this.formGroup.get('employeeName')?.value;
-  // Format date for backend
-
-  //** In save(), model.startDate: Thu Jun 15 2023 10:00:00 GMT+1000 (Australian Eastern Standard Time)
-
-  // let startFormat = moment.parseFormat(model.startDate);
-
-    // const startDb = moment(model.startDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
-    // const endDb = moment(model.endDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
 
 
-    //   let splitStart = model?.startDate.split(' ');
+  // const startFormat = this.formGroup.get('startDate')?.value;
+  model.startDate = this.formGroup.get('startDate')?.value;
+  model.endDate = this.formGroup.get('endDate')?.value;
+
+  const startDb = moment(model.startDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
+  const endDb = moment(model.endDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
+  // console.log(`Typeof startDB: ${typeof startDb}`) ;
     // console.log(`Moment format long date from Edit Input Thu Jun 15 2023 10:00:00`)
     // console.log(startDb);
     // console.log(endDb);
-
-  const startFormat = this.formGroup.get('startDate')?.value;
-  model.startDate = this.formGroup.get('startDate')?.value;
-  model.endDate = this.formGroup.get('endDate')?.value;
-    const startDb = moment(model.startDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
-    const endDb = moment(model.endDate, "ddd mmm dd yyyy HH:mm:ss").format("\"YYYY-MM-DD\"");
-    console.log(`Typeof startDB: ${typeof startDb}`) ;
-    console.log(`Moment format long date from Edit Input Thu Jun 15 2023 10:00:00`)
-    console.log(startDb);
-    console.log(endDb);
-    model.startDate = new Date(startDb);
-    model.endDate = new Date(endDb);
-    console.log(`Typeof model.startDate new Date() ${typeof model.startDate}`)
+  model.startDate = new Date(startDb);
+  model.endDate = new Date(endDb);
+  console.log(`Typeof model.startDate new Date() ${typeof model.startDate}`)
   model.days = this.formGroup.get('days')?.value;
   model.leaveType = this.formGroup.get('leaveType')?.value;
   model.reason = this.formGroup.get('reason')?.value;
@@ -277,7 +274,7 @@ export class LeaveComponent implements OnInit{
   }
   cancelAddForm() {
     this.isList = !this.isList;
-    this.isShowAdd = !this.isShowAdd
+    this.isShowAdd = false;
   }
 
 
