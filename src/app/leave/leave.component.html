@@ -6,12 +6,12 @@
     <h2>LATEST LEAVE APPLICATIONS</h2>
   </div>
   <div fxLayout="row" fx-grow="1" style="align-items: baseline;">
-    <div style="margin-left: 20px">
-      <mat-form-field appearance="fill">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
-      </mat-form-field>
-    </div>
+<!--    <div style="margin-left: 20px">-->
+<!--      <mat-form-field appearance="fill">-->
+<!--        <mat-label>Filter</mat-label>-->
+<!--        <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
 
 
     <div style="margin-left: 90px">
@@ -138,11 +138,13 @@
             </mat-select>
 
           </mat-form-field>
+          <div style="width: 100%">
           <mat-form-field fxFill>
             <mat-label>Reason</mat-label>
 
-            <input matInput  formControlName="reason">
+            <textarea matInput  formControlName="reason" maxlength="50"></textarea>
           </mat-form-field>
+          </div>
           <mat-form-field fxFill>
             <mat-label>Status</mat-label>
             <input matInput  formControlName="status">
@@ -243,7 +245,7 @@
         <mat-form-field fxFill>
           <mat-label>Reason</mat-label>
 
-          <input matInput  formControlName="reason">
+          <textarea matInput  formControlName="reason" maxlength="50"></textarea>
         </mat-form-field>
         <mat-form-field fxFill>
           <mat-label>Status</mat-label>

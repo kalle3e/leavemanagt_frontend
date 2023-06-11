@@ -37,14 +37,14 @@ export class LeaveService {
       })
     );
   }
-  addTeLeave(testdata: Testdata) {
-    console.log('In Service call - addTeLeave')
-    return this.http.post(`${this.baseUrl}/add`, { data: testdata }).pipe (
-      map((res) => {
-        return res;
-      })
-    );
-  }
+  // addTeLeave(testdata: Testdata) {
+  //   console.log('In Service call - addTeLeave')
+  //   return this.http.post(`${this.baseUrl}/add`, { data: testdata }).pipe (
+  //     map((res) => {
+  //       return res;
+  //     })
+  //   );
+  // }
 
   addLeavedb(leavedata: any) {
     console.log('In Service call - addTeLeave')

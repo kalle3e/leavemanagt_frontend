@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, ValidatorFn, AbstractControl, ValidationErrors, FormControl} from "@angular/forms";
+import {FormBuilder, ValidatorFn, AbstractControl, ValidationErrors, FormControl, Validators} from "@angular/forms";
 import { MatFormField } from "@angular/material/form-field";
 import { MatButton } from "@angular/material/button";
 import { MatTableDataSource } from "@angular/material/table";
@@ -30,16 +30,10 @@ export class LeaveComponent implements OnInit{
     {value: "Sick"},
 
   ]
-  // leavetyps: Leavetyps[] = [
-  //   {value: "personal-0", viewValue: "Personal"},
-  //   {value: "vacation-0", viewValue: "Vacation"},
-  //   {value: "bereavement-0", viewValue: "Bereavement"},
-  //   {value: "sick-0", viewValue: "Sick"},
-  //
-  // ]
-  personFilters: PersonFilter[]=[];
+
+  // personFilters: PersonFilter[]=[];
   isShowEdit: boolean = false;
-  isShowMini: boolean = false;
+  // isShowMini: boolean = false;
   isShowAdd: boolean = false;
   isShowAddForm: boolean = false;
   isShowEditForm: boolean = false;
@@ -51,16 +45,14 @@ export class LeaveComponent implements OnInit{
   formGroup = this.fb.group({
 
     // txId:  FormControl,
-    txId:  new FormControl<string|null>(''),
-    // employeeName: new FormControl<string|null>(''),
-    employeeName: [''],
-    // start_date: [], // error : <string | null> tobe defined somewher - see notes
-      startDate: new FormControl(new Date('2023-12-12')),
-    endDate: new FormControl(new Date('2023-12-12')),
-    days: new FormControl<string|null>(''),
-    leaveType: new FormControl<string|null>(''),
-    reason: new FormControl<string|null>(''),
-    status:new FormControl<string|null>('')
+    txId:  [''],
+    employeeName: ['', Validators.required],
+    startDate: [new Date(), Validators.required],
+    endDate: [new Date(), Validators.required],
+    days: ['', Validators.required],
+    leaveType: ['', Validators.required],
+    reason: ['', Validators.required],
+    status:['', Validators.required]
   });
 
   //  // https://angular.io/api/forms/FormGroup#create-a-form-group-with-a-group-level-validator
@@ -71,31 +63,7 @@ export class LeaveComponent implements OnInit{
   //   return start?.value !== null && end?.value !== null && start?.value < end?.value
   //     ? null :{ dateValid:true };
   // }
-  //   Using old names (Leave[]; spec tx_id as number)
-  // LeaveData:
-  //   Leave[] =[{"tx_id":'2222',"employeeName":"Shirley Mille","startDate":"28-09-2022","endDate":"29/09/2022","days":'5',"leave_type":"Sick","reason":"a","status":"Approved"},
-  //   {"txId":'3333',"employeeName":"Hudson O'Brien","startDate":"28-09-2022","end_date":"01-10-2022","days":'6',"leave_type":"Vacation","reason":"a","status":"Pending"},
-  //   {"txId":'4444',"employeeName":"Lily Wright","startDate":"28-09-2022","end_date":"24-10-2022","days":'2',"leave_type":"Personal","reason":"a","status":"Approved"},
-  //   {"txId":'5555',"employeeName":"Claire Ryan","startDate":"25-09-2022","end_date":"26-09-2022","days":'4',"leave_type":"Bereavement","reason":"a","status":"Approved"},
-  //   {"txId":'6666',"employeeName":"Edward Gray","startDate":"01-09-2022","end_date":"05-09-2022","days":'10',"leave_type":"Personal","reason":"a","status":"Pending"},
-  //   {"txId":'7777',"employeeName":"Nate Jones","startDate":"03-01-2022","end_date":"10-01-2022","days":'4',"leave_type":"Personal","reason":"a","status":"Pending"},
-  //   {"txId":'8888',"employeeName":"Amelia Bennett","startDate":"03-01-2022","end_date":"10-01-2022","days":'5',"leave_type":"Personal","reason":"a","status":"Approved"},
-  //   {"txId":'9999',"employeeName":"Ellie Taylor","startDate":"03-01-2022","end_date":"10-01-2022","days":'10',"leave_type":"Sick","reason":"a","status":"Approved"},];
 
-  // LeaveData: Leavedb[] = [];
-  // Need data
-  // LeaveData:
-  //   Leavedb[] =[{"txId":'2222',"employeeName":"Shirley Mille","startDate":"28-09-2022","endDate":"29-09-2022","days":'5',"leaveType":"Sick","reason":"a","status":"Approved"},
-  //   {"txId":'2',"employeeName":"Hudson O'Brien","startDate":"28-09-2022","endDate":"01-10-2022","days":'6',"leaveType":"Vacation","reason":"a","status":"Pending"},
-  //   {"txId":'4444',"employeeName":"Lily Wright","startDate":"28-09-2022","endDate":"24-10-2022","days":'2',"leaveType":"Personal","reason":"a","status":"Approved"},
-  //   {"txId":'5555',"employeeName":"Claire Ryan","startDate":"25-09-2022","endDate":"26-09-2022","days":'4',"leaveType":"Bereavement","reason":"a","status":"Approved"},
-  //   {"txId":'6666',"employeeName":"Edward Gray","startDate":"01-09-2022","endDate":"05-09-2022","days":'10',"leaveType":"Personal","reason":"a","status":"Pending"},
-  //   {"txId":'7777',"employeeName":"Nate Jones","startDate":"03-01-2022","endDate":"10-01-2022","days":'4',"leaveType":"Personal","reason":"a","status":"Pending"},
-  //   {"txId":'8888',"employeeName":"Amelia Bennett","startDate":"03-01-2022","endDate":"10-01-2022","days":'5',"leaveType":"Personal","reason":"a","status":"Approved"},
-  //   {"txId":'9999',"employeeName":"Ellie Taylor","startDate":"03-01-2022","endDate":"10-01-2022","days":'10',"leaveType":"Sick","reason":"a","status":"Approved"},];
-  // // dataSource = PERSON;
-  // dataSource = new MatTableDataSource(this.LeaveData)  // Need data
-  // dataSourceFilters = new MatTableDataSource(); // Need data
 
   dataSource = new MatTableDataSource(); // Need data
   dataSourceFilters = new MatTableDataSource(); // Need data
@@ -115,20 +83,19 @@ export class LeaveComponent implements OnInit{
   isAddForm: boolean = false;
   isCreate: boolean = false;
 
-  // formattedStart
-
   // dataSource = ELEMENT_DATA;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'inEdit'];
-  constructor(private fb: FormBuilder,
-              private leaveService: LeaveService
+  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'inEdit'];
+  constructor(private fb: FormBuilder
+
   )
   {}
-
+  // private leaveService: LeaveService
   ngOnInit(): void {
-    this.getLeave();
-    // this.dataSource = this.LeaveData;
-    this.dataSource = new MatTableDataSource(this.LeaveData)  // Need data
-    this.dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
+    console.log('In ngOnInit -----');
+    // this.getLeave();
+    // // this.dataSource = this.LeaveData;
+    // this.dataSource = new MatTableDataSource(this.LeaveData)  // Need data
+    // this.dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
     // this.dataSourceFilters = this.LeaveData;
 
     this.dataSourceFilters.filterPredicate = function (record,filter) {
@@ -136,7 +103,7 @@ export class LeaveComponent implements OnInit{
     }
     //Resets flags
     this.isShowEdit = false;
-    this.isShowMini = false;
+    // this.isShowMini = false;
     this.isEditForm = false;
     this.isShowAddForm = false;
 
@@ -152,17 +119,14 @@ export class LeaveComponent implements OnInit{
   //
   //   }
   // }
-  getLeave() {
-    this.leaveService.getLeave().subscribe(
-      // res => this.leave = res.
-      (res: Leavedb[]) => {
-                   // this.LeaveData = res;
-                    this.LeaveData = res;
-        // console.log(`Array length: ${this.LeaveData.length}`);
-      }
-
-    );
-  }
+  // getLeave() {
+  //   this.leaveService.getLeave().subscribe(
+  //     // res => this.leave = res.
+  //     (res: Leavedb[]) => {
+  //                  // this.LeaveData = res;
+  //                   this.LeaveData = res;
+  //     });
+  // }
   showAdd() {
     this.formGroup.reset({
       txId: null,
@@ -223,14 +187,16 @@ export class LeaveComponent implements OnInit{
     // If tx_id avail add/create service else update service
     //
     // this.leaveService.addLeavedb(this.leavedata).subscribe(
-    this.leaveService.addLeavedb(model).subscribe(
-      (res: Leavedb) => {
-
-        this.success = 'Created sucessfully';
-      },
-      (err) => (this.errorm = err.message)
-    );
+    // this.leaveService.addLeavedb(model).subscribe(
+    //   (res: Leavedb) => {
+    //     // this.LeaveData.push(model);
+    //     this.LeaveData(); // refetch update
+    //     this.success = 'Created sucessfully';
+    //   },
+    //   (err) => (this.errorm = err.message)
+    // );
     // Load data for datasource
+    // this.getLeave();
   }
 
   // showEditForm(element: Leave) {
