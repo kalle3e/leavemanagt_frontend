@@ -16,9 +16,13 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTableModule } from "@angular/material/table";
+
 import { LeaveComponent } from "./leave/leave.component";
 import { MatLegacyNativeDateModule } from "@angular/material/legacy-core";
-import { TetableComponent } from './tetable/tetable.component';
+import { ListComponent } from './list/list.component';
+import { EditComponent } from './edit/edit.component';
+import { AddComponent } from './add/add.component';
+import { AppRoutingModule } from './app-routing.module';
 
 
 
@@ -27,7 +31,9 @@ import { TetableComponent } from './tetable/tetable.component';
   declarations: [
     AppComponent,
     LeaveComponent,
-    TetableComponent
+    ListComponent,
+    EditComponent,
+    AddComponent
 
 
 
@@ -51,7 +57,8 @@ import { TetableComponent } from './tetable/tetable.component';
     MatTableModule,
     MatIconModule,
     MatSelectModule,
-    MatLegacyNativeDateModule
+    MatLegacyNativeDateModule,
+    AppRoutingModule
 
   ],
   providers: [],

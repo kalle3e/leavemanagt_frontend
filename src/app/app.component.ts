@@ -32,10 +32,30 @@ export class AppComponent implements OnInit{
     this.dataSourceFilters.filterPredicate = function (record,filter) {
       return true;
     }
+    this.isShowAdd = false;
+    this.isShowEdit = false;
   }
 
-  showAdd(){}
-  showEditForm() {}
+  showAdd() {
+    // this.formGroup.reset({
+    //   txId: null,
+    //   employeeName: '',
+    //   startDate: new Date(),
+    //   endDate: new Date(),
+    //   days: null,
+    //   leaveType: '',
+    //   reason: '',
+    //   status: ''
+    //
+    // });
+
+    // this.isForm = !this.isForm;
+    this.isShowAdd = true;
+  }
+  showEditForm() {
+    this.isShowEdit = true;
+  }
+
   getLeave() {
     this.leaveService.getLeave().subscribe(
       // res => this.leave = res.
@@ -43,5 +63,8 @@ export class AppComponent implements OnInit{
                    // this.LeaveData = res;
                     this.LeaveData = res;
       });
+  }
+  addLeave(leaveRow: Leavedb) {
+    // this.LeaveData.push();
   }
 }

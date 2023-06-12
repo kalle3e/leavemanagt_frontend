@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TetableComponent } from './tetable.component';
+import { ListComponent } from './list.component';
 
-describe('TetableComponent', () => {
-  let component: TetableComponent;
-  let fixture: ComponentFixture<TetableComponent>;
+describe('ListComponent', () => {
+  let component: ListComponent;
+  let fixture: ComponentFixture<ListComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TetableComponent]
+      declarations: [ListComponent]
     });
-    fixture = TestBed.createComponent(TetableComponent);
+    fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

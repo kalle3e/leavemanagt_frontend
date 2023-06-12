@@ -85,18 +85,17 @@ export class LeaveComponent implements OnInit{
 
   // dataSource = ELEMENT_DATA;
   // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'inEdit'];
-  constructor(private fb: FormBuilder
-
+  constructor(private fb: FormBuilder,
+              private leaveService: LeaveService
   )
   {}
   // private leaveService: LeaveService
   ngOnInit(): void {
-    console.log('In ngOnInit -----');
-    // this.getLeave();
-    // // this.dataSource = this.LeaveData;
+    this.getLeave();
+    // this.dataSource = this.LeaveData;
     // this.dataSource = new MatTableDataSource(this.LeaveData)  // Need data
-    // this.dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
-    // this.dataSourceFilters = this.LeaveData;
+    this.dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
+    this.dataSourceFilters = this.LeaveData;
 
     this.dataSourceFilters.filterPredicate = function (record,filter) {
       return true;
@@ -119,14 +118,14 @@ export class LeaveComponent implements OnInit{
   //
   //   }
   // }
-  // getLeave() {
-  //   this.leaveService.getLeave().subscribe(
-  //     // res => this.leave = res.
-  //     (res: Leavedb[]) => {
-  //                  // this.LeaveData = res;
-  //                   this.LeaveData = res;
-  //     });
-  // }
+  getLeave() {
+    this.leaveService.getLeave().subscribe(
+      // res => this.leave = res.
+      (res: Leavedb[]) => {
+                   // this.LeaveData = res;
+                    this.LeaveData = res;
+      });
+  }
   showAdd() {
     this.formGroup.reset({
       txId: null,
@@ -181,41 +180,23 @@ export class LeaveComponent implements OnInit{
   model.reason = this.formGroup.get('reason')?.value;
   model.status = this.formGroup.get('status')?.value;
 
-  console.log(`LeaveType: ${model.leaveType}`);
-  console.log(`In save(), model.startDate: ${model.startDate}`)
+  // console.log(`LeaveType: ${model.leaveType}`);
+  // console.log(`In save(), model.startDate: ${model.startDate}`)
 
-    // If tx_id avail add/create service else update service
-    //
-    // this.leaveService.addLeavedb(this.leavedata).subscribe(
-    // this.leaveService.addLeavedb(model).subscribe(
-    //   (res: Leavedb) => {
-    //     // this.LeaveData.push(model);
-    //     this.LeaveData(); // refetch update
-    //     this.success = 'Created sucessfully';
-    //   },
-    //   (err) => (this.errorm = err.message)
-    // );
-    // Load data for datasource
-    // this.getLeave();
   }
-
-  // showEditForm(element: Leave) {
 
   showEditForm(element: Leavedb) {
 
-    let momentA = moment("21/10/14", "DD/MM/YY").format("MM/DD/YY");
-    console.log(`MomentA: ${momentA}`);
+    // let momentA = moment("21/10/14", "DD/MM/YY").format("MM/DD/YY");
+    // console.log(`MomentA: ${momentA}`);
 
     let startyyyymmdd = moment(element.startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
     let endyyyymmdd = moment(element.endDate, "YYYY-MM-DD").format("YYYY-MM-DD");
 
-    console.log(`Date edit in showEdit: ${element.startDate}`) // convert this for Edit field datepicker
-
-    // let dateformat = element.startDate;
-    // let start = this.format(dateformat);
-    // console.log(`Returned date formatted: ${start}`)
-    console.log(`Date to edit: ${element.startDate}`);
-    console.log(`Date after momentFormt: ${startyyyymmdd}`)
+    // console.log(`Date edit in showEdit: ${element.startDate}`) // convert this for Edit field datepicker
+    //
+    // console.log(`Date to edit: ${element.startDate}`);
+    // console.log(`Date after momentFormt: ${startyyyymmdd}`)
 
 
     this.formGroup.get('txId')?.setValue(`${element.txId}`?? '');
