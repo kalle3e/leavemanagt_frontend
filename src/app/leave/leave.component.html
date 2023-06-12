@@ -131,8 +131,8 @@
           <mat-form-field fxFill>
             <mat-label>LeaveType</mat-label>
             <mat-select matNativeControl required formControlName="leaveType">
-              <mat-option *ngFor="let leavetyp of leavetyps" [value]="leavetyp.value">
-                {{leavetyp.value}}
+              <mat-option *ngFor="let leavetype of leavetypes" [value]="leavetype">
+                {{leavetype}}
               </mat-option>
             </mat-select>
 
@@ -218,8 +218,8 @@
         <mat-form-field fxFill>
           <mat-label>LeaveType</mat-label>
           <mat-select matNativeControl required formControlName="leaveType">
-            <mat-option *ngFor="let leavetyp of leavetyps" [value]="leavetyp.value">
-              {{leavetyp.value}}
+            <mat-option *ngFor="let leavetype of leavetypes" [value]="leavetype">
+              {{leavetype}}
             </mat-option>
           </mat-select>
 <!--          <input matInput  formControlName="leave_type">-->

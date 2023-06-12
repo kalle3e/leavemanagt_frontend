@@ -24,6 +24,7 @@ interface Leavetyps {
 export class LeaveComponent implements OnInit{
 
   LeaveData: any;
+  leavetypes: string[] = ['Personal', 'Vacation', 'Bereavement', 'Sick'];
   leavetyps: Leavetyps[] = [
     {value: "Personal"},
     {value: "Vacation"},
@@ -102,7 +103,6 @@ export class LeaveComponent implements OnInit{
     }
     //Resets flags
     this.isShowEdit = false;
-    // this.isShowMini = false;
     this.isEditForm = false;
     this.isShowAddForm = false;
 
