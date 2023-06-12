@@ -10,6 +10,7 @@ import { LeaveService } from "../leave.service";
 import  { Moment } from 'moment';
 import * as moment from 'moment';
 import { FlexModule } from "@ngbracket/ngx-layout";
+import { LeaveFilter } from "../leaveFilter";
 
 
 interface Leavetyps {
@@ -43,8 +44,6 @@ export class LeaveComponent implements OnInit{
   date = new FormControl(new Date('2023-12-12'));
 
   formGroup = this.fb.group({
-
-    // txId:  FormControl,
     txId:  [''],
     employeeName: ['', Validators.required],
     startDate: [new Date(), Validators.required],
@@ -55,6 +54,7 @@ export class LeaveComponent implements OnInit{
     status:['', Validators.required]
   });
 
+  // Checking end date < start
   //  // https://angular.io/api/forms/FormGroup#create-a-form-group-with-a-group-level-validator
   // dateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   //   const start = this.formGroup.get('start_date');
@@ -94,8 +94,8 @@ export class LeaveComponent implements OnInit{
     this.getLeave();
     // this.dataSource = this.LeaveData;
     // this.dataSource = new MatTableDataSource(this.LeaveData)  // Need data
-    this.dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
-    this.dataSourceFilters = this.LeaveData;
+    // this.dataSourceFilters = new MatTableDataSource(this.LeaveData); // Need data
+    // this.dataSourceFilters = this.LeaveData;
 
     this.dataSourceFilters.filterPredicate = function (record,filter) {
       return true;
@@ -121,9 +121,12 @@ export class LeaveComponent implements OnInit{
   getLeave() {
     this.leaveService.getLeave().subscribe(
       // res => this.leave = res.
-      (res: Leavedb[]) => {
+      res => {
                    // this.LeaveData = res;
                     this.LeaveData = res;
+        // this.dataSourceFilters = new MatTableDataSource(res);
+        this.dataSourceFilters = this.LeaveData;
+        this.dataSource = this.LeaveData;
       });
   }
   showAdd() {

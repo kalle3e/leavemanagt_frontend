@@ -1,4 +1,8 @@
 <!---->
+<mat-form-field appearance="fill">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+</mat-form-field>
 <form [formGroup]="formGroup" (ngSubmit)="save()">
 <div *ngIf="!(isShowEdit || isShowAdd)">
 <mat-card>
@@ -6,12 +10,12 @@
     <h2>LATEST LEAVE APPLICATIONS</h2>
   </div>
   <div fxLayout="row" fx-grow="1" style="align-items: baseline;">
-<!--    <div style="margin-left: 20px">-->
-<!--      <mat-form-field appearance="fill">-->
-<!--        <mat-label>Filter</mat-label>-->
-<!--        <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
+    <div style="margin-left: 20px">
+      <mat-form-field appearance="fill">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+      </mat-form-field>
+    </div>
 
 
     <div style="margin-left: 90px">
@@ -184,19 +188,10 @@
           </div>
         </div>
 
-<!--        <div fxLayoutAlign="end" style="align-items: baseline; margin-right: 50px;">-->
-
-
-<!--          <div style="width: 50px; margin-left: 80px">-->
-<!--            <button mat-raised-button color="primary">Modify</button>-->
-<!--          </div>-->
-<!--        </div>-->
-
-
         <div *ngIf="!isShowAdd" style="margin-top: 10px">
           <mat-form-field fxFill>
             <mat-label>Tx Id</mat-label>
-            <input matInput  formControlName="txId">
+            <input matInput formControlName="txId" readonly="readonly">
           </mat-form-field>
         </div>
         <mat-form-field fxFill>
@@ -224,15 +219,7 @@
           <mat-label>Days</mat-label>
           <input matInput  formControlName="days">
         </mat-form-field>
-<!--        <select matNativeControl required formControlName="leave_type">-->
-<!--          <option value="volvo">Volvo</option>-->
-<!--          <option value="saab">Saab</option>-->
-<!--          <option value="mercedes">Mercedes</option>-->
-<!--          <option value="audi">Audi</option>-->
-<!--        </select>-->
-<!--        <mat-option *ngFor="let leavetyp of leavetyps" [value]="leavetyp.value">-->
-<!--          {{leavetyp.viewValue}}-->
-<!--        </mat-option>-->
+
         <mat-form-field fxFill>
           <mat-label>LeaveType</mat-label>
           <mat-select matNativeControl required formControlName="leaveType">
